@@ -1,0 +1,29 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button class="example-icon" color="accent" aria-label="Example icon-button with menu icon">
+    <mat-icon>how_to_reg</mat-icon>
+  </button>
+  <span>Electronic Voting Platform</span>
+  <span class="example-spacer"></span>
+  <div *ngIf="!isAuthenticated"
+       class="example-button-container">
+    <button mat-fab color="accent" aria-label="Example icon button with a bookmark icon" [routerLink]="['/signup']">
+      <mat-icon>how_to_reg</mat-icon>
+    </button>
+    <span class="button-text">Sign Up</span>
+  </div>
+  <div *ngIf="!isAuthenticated"
+       class="example-button-container">
+    <button mat-fab color="accent" aria-label="Example icon button with a delete icon" [routerLink]="['/auth']">
+      <mat-icon>login</mat-icon>
+    </button>
+    <span class="button-text">Sign In</span>
+  </div>
+  <div *ngIf="isAuthenticated"
+       class="example-button-container">
+    <button mat-fab color="accent" aria-label="Example icon button with a bookmark icon" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+    </button>
+    <span class="button-text"> &nbsp; Logout</span>
+  </div>
+
+</mat-toolbar>

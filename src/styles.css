@@ -1,0 +1,84 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.text-center{
+  text-align: center;
+}
+
+
+.wrapper,
+.header {
+  display: grid;
+  grid-template-columns: 270px auto;
+  /*align-items: first;*/
+}
+
+.main {
+  height: 100vh;
+  overflow: auto;
+  margin-left: 50px;
+}
+
+.mt10{
+  margin-top: 10px !important;
+}
+
+.mt30{
+  margin-top: 30px !important;
+}
+
+.ml20{
+  margin-left: 20px;
+}
+
+.ml50{
+  margin-left: 180px;
+}
+
+.ml80{
+  margin-left: 500px;
+}
+
+.ml100{
+  margin-left: 600px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.right-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.back{
+  background: linear-gradient(45deg,#F21A2B,#E787F2);
+}
+
+.backwhite{
+  background: white;
+  padding: 10px; /* Adjust the padding as needed */
+  margin: 10px; /* Adjust the margin as needed */
+  border-radius: 10px;
+}
+
+.border-radius20{
+  border-radius: 20px;
+}
+

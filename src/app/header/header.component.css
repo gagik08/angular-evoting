@@ -1,0 +1,24 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+/* Add this style in your component's CSS or global styles */
+.example-icon {
+  font-size: 24px; /* Set the desired font size */
+}
+
+.favorite-icon {
+  font-size: 28px; /* You can set a different font size for this specific button */
+}
+
+.mat-icon-button {
+  padding: 12px; /* Adjust as needed */
+}
+.example-button-container {
+  display: flex;
+  align-items: center;
+  margin-right: 16px; /* Adjust the margin as needed */
+}
+
+.button-text {
+  margin-left: 8px;
+}
