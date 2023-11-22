@@ -1,0 +1,100 @@
+<div class="container-fluid">
+  <div class="box">
+    <div class="box-content backwhite">
+      <div class="col-md-8">
+        <div *ngIf="sociologicalSurvey">
+          <h1 class="survey-title"><b>Take part in a sociological survey {{ sociologicalSurvey?.title }}</b></h1>
+          <h3 class="survey-description"><b>Description: {{sociologicalSurvey.description}}</b></h3>
+
+          <ng-container *ngIf="sociologicalSurvey.questions && sociologicalSurvey.questions.length > 0">
+            <div *ngIf="currentQuestionIndex < sociologicalSurvey.questions.length">
+              <mat-card class="survey-card">
+                <mat-card-content>
+                  <p class="question-content"><b>{{ sociologicalSurvey.questions[currentQuestionIndex].content }}</b></p>
+
+                  <mat-divider class="divider"></mat-divider>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- Display radio buttons for each entry in options map -->
+                      <div *ngFor="let entry of Object.keys(sociologicalSurvey.questions[currentQuestionIndex].options); let j = index">
+                        <label class="radio-label">
+                          <input type="radio" name="{{sociologicalSurvey.questions[currentQuestionIndex].content}}"
+                                 [value]="entry" [(ngModel)]="selectedOption">
+                          {{ entry }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Vote button outside of ngFor loop -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <button class="vote-button" (click)="voteForSelectedOption()">Vote</button>
+                    </div>
+                  </div>
+
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="col-md-2"></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--<div class="container-fluid">-->
+<!--  <div class="box">-->
+<!--    <div class="box-content backwhite">-->
+<!--      <div class="col-md-8">-->
+<!--        <div *ngIf="sociologicalSurvey">-->
+<!--          <h1><b>Take part in a sociological survey {{ sociologicalSurvey?.title }}</b></h1>-->
+<!--          <h3><b>Description: {{sociologicalSurvey.description}}</b></h3>-->
+
+<!--          <ng-container *ngIf="sociologicalSurvey.questions && sociologicalSurvey.questions.length > 0">-->
+<!--            <div *ngIf="currentQuestionIndex < sociologicalSurvey.questions.length">-->
+<!--              <mat-card>-->
+<!--                <mat-card-content>-->
+<!--                  <p><b>{{ sociologicalSurvey.questions[currentQuestionIndex].content }}</b></p>-->
+
+<!--                  <mat-divider></mat-divider>-->
+
+<!--                  <div class="row">-->
+<!--                    <div class="col-md-6">-->
+<!--                      &lt;!&ndash; Display radio buttons for each entry in options map &ndash;&gt;-->
+<!--                      <div *ngFor="let entry of Object.keys(sociologicalSurvey.questions[currentQuestionIndex].options); let j = index">-->
+<!--                        <label>-->
+<!--                          <br>-->
+<!--                          <input type="radio" name="{{sociologicalSurvey.questions[currentQuestionIndex].content}}"-->
+<!--                                 [value]="entry" [(ngModel)]="selectedOption">-->
+<!--                          {{ entry }}-->
+<!--                        </label>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+
+<!--                  &lt;!&ndash; Vote button outside of ngFor loop &ndash;&gt;-->
+<!--                  <div class="row">-->
+<!--                    <div class="col-md-6">-->
+<!--                      <button (click)="voteForSelectedOption()">Vote</button>-->
+<!--                    </div>-->
+<!--                  </div>-->
+
+<!--                </mat-card-content>-->
+<!--              </mat-card>-->
+<!--            </div>-->
+<!--          </ng-container>-->
+<!--        </div>-->
+
+<!--        <div class="col-md-2"></div>-->
+
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

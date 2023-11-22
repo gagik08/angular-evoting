@@ -1,0 +1,64 @@
+<div class="container-fluid">
+  <div class="box">
+    <div class="box-content backwhite">
+      <div class="bootstrap-wrapper">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 style="text-align: center">Adding a Question</h1>
+            <mat-card>
+              <mat-card-header>
+                <mat-card-subtitle><h1>Enter the detail of a new question</h1></mat-card-subtitle>
+              </mat-card-header>
+
+              <mat-card-content>
+                <form [formGroup]="addQuestionFormGroup" (ngSubmit)="onSubmit()" class="strong-border">
+
+                  <div class="col-6 mb-10">
+                    <div>
+                      <label class="form-label">Enter Question</label>
+                      <textarea  type="text" formControlName="content" class="form-control input-area"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="col-3 mb-3">
+                    <label class="form-label">Number of Options</label>
+                    <select formControlName="numberOfOptions" class="form-control strong-border input-area" (change)="onChangeOptions($event)"
+                            [ngClass]="{ 'is-invalid': submitted && f['numberOfOptions'].errors }">
+                      <option value=""></option>
+                      <option *ngFor="let i of [2,3,4,5]">{{i}}</option>
+                    </select>
+                    <div *ngIf="submitted && f['numberOfOptions'].errors" class="invalid-feedback strong-border ">
+                    </div>
+                  </div>
+
+                  <div class="col-6 mb-10" formArrayName="options">
+                    <div *ngFor="let control of getOptions.controls; let i = index" [formGroupName]="i" class="strong-border">
+                      <label class="form-label">Option {{i+1}}</label>
+                      <textarea type="text" formControlName="key" class="form-control input-area"></textarea>
+                    </div>
+                  </div>
+
+<!--                  <pre>{{ addQuestionFormGroup.value | json }}</pre>-->
+                </form>
+
+                <div class="container text-center">
+                  <button mat-raised-button color="accent" (click)="onSubmit()">Add</button>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <mat-form-field class="w100" formArrayName="options">-->
+<!--   <div *ngFor="let control of getOptions.controls; let i = index" [formGroupName]="i">-->
+<!--     <div class="col-6 mb-3">-->
+<!--       <mat-label>Enter Option</mat-label>-->
+<!--       <input type="text" name="opt" placeholder="Enter here" matInput formControlName="opt"/>-->
+<!--     </div>-->
+<!--   </div>-->
+<!-- </mat-form-field>-->

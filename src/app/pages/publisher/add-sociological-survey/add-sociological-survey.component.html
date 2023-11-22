@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <div class="box">
+    <div class="box-content backwhite">
+      <form [formGroup]="sociologicalSurveyFormGroup" (ngSubmit)="onSubmit()">
+
+        <div class="my-3" >
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Title</mat-label>
+            <input matInput type="text" formControlName="title" />
+          </mat-form-field>
+          <div *ngIf="sociologicalSurveyFormGroup.get('title')?.touched">
+    <span *ngIf="sociologicalSurveyFormGroup.get('title')?.hasError('required')">
+      Please enter a title for the sociological survey
+    </span>
+          </div>
+        </div>
+
+        <div class="my-3" style="width: 50%">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description"></textarea>
+          </mat-form-field>
+          <div *ngIf="sociologicalSurveyFormGroup.get('description')?.touched && sociologicalSurveyFormGroup.get('description')?.hasError('required')">
+            <span>Please enter a description for the sociological survey</span>
+          </div>
+        </div>
+
+
+        <div class="card-container" formArrayName="questions">
+          <div *ngFor="let question of getQuestionsControl().controls; let i = index" [formGroupName]="i" class="card">
+            <div class="card-header">
+              <mat-form-field appearance="fill">
+                <mat-label>Enter Question you want to ask</mat-label>
+                <input matInput type="text" formControlName="content" />
+              </mat-form-field>
+
+              <div formArrayName="options">
+                <button mat-raised-button color="accent" type="button" (click)="addOption(getOptionsControl(i))">Add Option</button>
+                <div *ngFor="let option of getOptionsControl(i).controls; let j = index" [formGroupName]="j" class="options-container">
+                  <hr />
+                  <mat-form-field appearance="fill">
+                    <mat-label>Option {{ j + 1 }}</mat-label>
+                    <input matInput type="text" formControlName="key" />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="my-3">
+            <button mat-raised-button color="primary" type="button" (click)="onAddQuestion()">Add Question</button>
+          </div>
+        </div>
+
+        <div class="my-3">
+          <button mat-raised-button color="primary" type="submit">Create</button>
+        </div>
+
+      </form>
+<!--      <pre>{{ sociologicalSurveyFormGroup.value | json }}</pre>-->
+    </div>
+  </div>
+</div>

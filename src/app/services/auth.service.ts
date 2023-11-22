@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {LoginRequest, LoginResponse} from "../model/login.model";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, of, switchMap} from "rxjs";
 import {environment} from "../../environments/environment";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {LoggedUser} from "../model/logger-user.model";
@@ -42,33 +42,43 @@ export class AuthService {
   }
 
   redirectLoggedInUser(decodedToken: any, accessToken: string) {
-    if (decodedToken.roles.includes("Commission Member")) this.router.navigateByUrl("/admin-dashboard");
-    else if (decodedToken.roles.includes("Publisher")) {
-      this.publisherService.loadPublisherByUsername(decodedToken.sub).subscribe(
-        publisher => {
+    if (decodedToken.roles.includes("Commission Member")) {
+      this.router.navigateByUrl("/admin-dashboard");
+    } else if (decodedToken.roles.includes("Publisher")) {
+      this.publisherService.loadPublisherByUsername(decodedToken.sub).pipe(
+        switchMap(publisher => {
           const loggedUser = new LoggedUser(decodedToken.sub, decodedToken.roles, accessToken, this.getExpirationDate(decodedToken.exp), undefined, publisher);
           this.user.next(loggedUser);
           localStorage.setItem('userData', JSON.stringify(loggedUser));
+          return of(publisher); // Return the publisher to continue the chain
+        })
+      ).subscribe(
+        () => {
           this.router.navigateByUrl("/publications");
         },
         error => {
           console.error('Error loading publisher:', error);
         }
-      )
+      );
     } else if (decodedToken.roles.includes("Voter")) {
-      this.voterService.loadVoterByUsername(decodedToken.sub).subscribe(
-        voter => {
+      this.voterService.loadVoterByUsername(decodedToken.sub).pipe(
+        switchMap(voter => {
           const loggedUser = new LoggedUser(decodedToken.sub, decodedToken.roles, accessToken, this.getExpirationDate(decodedToken.exp), voter, undefined);
           this.user.next(loggedUser);
           localStorage.setItem('userData', JSON.stringify(loggedUser));
-          this.router.navigateByUrl("/subscriptions/" + voter.voterId);
+          return of(voter); // Return the voter to continue the chain
+        })
+      ).subscribe(
+        () => {
+          this.router.navigateByUrl("/subscriptions/" + decodedToken.sub);
         },
         error => {
           console.error('Error loading voter:', error);
         }
-      )
+      );
     }
   }
+
 
   autoLogin() {
     const userData: {

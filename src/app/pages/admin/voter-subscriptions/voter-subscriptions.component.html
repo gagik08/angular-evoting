@@ -1,0 +1,51 @@
+<div class="container-fluid">
+  <div class="box">
+    <div class="box-content backwhite">
+
+      <ng-container class="example-card" *ngIf="pageSubscriptions$ | async as listSubscriptions; else failureOrLoading">
+
+        <ng-container *ngIf="listSubscriptions.content.length > 0; else noSubscription">
+          <mat-card class="example-card" *ngFor="let subscription of listSubscriptions.content">
+            <mat-card-header>
+              <mat-card-title>{{subscription.title}}</mat-card-title>
+              <mat-card-subtitle>{{subscription.category.categoryTitle}}</mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-actions class="button-container">
+              <button mat-stroked-button color="accent" (click)="getResultsRouterLink(subscription)" class="ml20">
+                Results
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </ng-container>
+
+        <ng-template #noSubscription>
+          <div class="text-center mt-3">
+            <p>No subscription found.</p>
+            <!-- You can add additional content or suggestions here -->
+          </div>
+        </ng-template>
+
+      </ng-container>
+
+      <ng-template #failureOrLoading>
+        <ng-container *ngIf="errorMessage; else loading">
+          <div class="text-danger">
+            {{errorMessage}}
+          </div>
+        </ng-container>
+        <ng-template #loading>
+          <div class="loading-overlay">
+            <div class="loader shadow-sm text-muted">
+              <span style="font-size: 24px; font-weight: bold;">
+                <i class="fa-solid fa-rotate fa-spin"></i>
+              </span>
+              &nbsp;
+              <span class="processing">Processing...</span>
+            </div>
+          </div>
+        </ng-template>
+      </ng-template>
+    </div>
+  </div>
+</div>

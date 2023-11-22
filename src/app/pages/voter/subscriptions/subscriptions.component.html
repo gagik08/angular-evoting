@@ -1,1 +1,66 @@
-<p>subscriptions works!</p>
+<div class="container-fluid">
+  <div class="box">
+    <div class="box-content backwhite">
+
+
+      <ng-container class="example-card" *ngIf="pageSubscriptions$ | async as listSubscriptions; else failureOrLoading">
+
+        <mat-card class="example-card" *ngFor="let subscription of listSubscriptions.content">
+          <mat-card-header>
+            <mat-card-title>{{subscription.title}}</mat-card-title>
+            <mat-card-subtitle>{{subscription.category.categoryTitle}}</mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-actions class="button-container">
+<!--            <div class="left-buttons">-->
+<!--              <button mat-stroked-button color="accent" [routerLink]="getRouterLink(subscription)">-->
+<!--                Questions-->
+<!--              </button>-->
+              <button mat-stroked-button color="accent" (click)="getResultsRouterLink(subscription)" class="ml20">
+                Results
+              </button>
+
+            <div class="right-buttons">
+              <button mat-raised-button color="primary" (click)="startVoting(subscription)" [disabled]="hasParticipated(subscription)">
+                <mat-icon>ads_click</mat-icon>
+                Participate
+              </button>
+            </div>
+
+
+          </mat-card-actions>
+        </mat-card>
+
+
+
+        <mat-paginator
+          [length]="listSubscriptions.totalPages"
+          [pageSizeOptions]="[5,10, 20, 50, 100]"
+          (page)="getNext($event)"
+          showFirstLastButtons="true">
+        </mat-paginator>
+
+      </ng-container>
+
+
+      <ng-template #failureOrLoading>
+        <ng-container *ngIf="errorMessage; else loading">
+          <div class="text-danger">
+            {{errorMessage}}
+          </div>
+        </ng-container>
+        <ng-template #loading>
+          <div class="loading-overlay">
+            <div class="loader shadow-sm text-muted">
+      <span style="font-size: 24px; font-weight: bold;">
+        <i class="fa-solid fa-rotate fa-spin"></i>
+      </span>
+              &nbsp;
+              <span class="processing">Processing...</span>
+            </div>
+          </div>
+        </ng-template>
+      </ng-template>
+    </div>
+  </div>
+</div>

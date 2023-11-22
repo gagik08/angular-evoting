@@ -1,9 +1,10 @@
 
 
-.example-header-image {
+.example-header-image-soc-survey {
   background-image: url('src/assets/images/soc-survey.png');
   background-size: cover;
 }
+
 
 .example-card {
   width: 1000px; /* Adjust the width of each card as needed */

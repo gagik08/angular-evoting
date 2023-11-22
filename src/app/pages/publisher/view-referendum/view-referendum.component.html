@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <div class="box">
+    <div class="box-content backwhite">
+      <h1 class="text-center">Referendum Question</h1>
+      <div class="bootstrap-wrapper">
+        <div class="row">
+          <div class="col-md-12">
+
+            <div *ngIf="referendumQuestion">
+              <mat-card-content>
+                <h1><strong>{{ title }}</strong></h1>
+                <h3><strong>{{description}}</strong></h3>
+
+                <div class="option-container">
+                  <b> Option 1: {{ referendumQuestion.optionFor }}</b>
+                </div>
+                <br>
+                <div class="option-container">
+                  <b> Option 2: {{ referendumQuestion.optionAgainst }}</b>
+                </div>
+              </mat-card-content>
+              <br><br>
+            </div>
+
+          </div>
+        </div>
+        <button mat-fab extended color="primary" routerLink="/sociological-surveys">
+          <mat-icon>arrow_back</mat-icon>
+          Back
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

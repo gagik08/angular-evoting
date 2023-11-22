@@ -17,7 +17,7 @@ body {
 .wrapper,
 .header {
   display: grid;
-  grid-template-columns: 270px auto;
+  grid-template-columns: 200px auto;
   /*align-items: first;*/
 }
 
@@ -82,3 +82,35 @@ body {
   border-radius: 20px;
 }
 
+.green-text {
+  color: green;
+}
+
+.red-text {
+  color: red;
+}
+.percentage {
+  font-weight: bold;
+  color: blue; /* Adjust the color as needed */
+}
+
+.option-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Add this style to your component's CSS file or in the component's style block */
+
+mat-form-field.w100 {
+  width: 100%;
+}
+
+mat-form-field.w100 div {
+  margin-bottom: 10px; /* Adjust the margin as needed */
+}
+.input-area {
+  border: 2px solid #000000;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}

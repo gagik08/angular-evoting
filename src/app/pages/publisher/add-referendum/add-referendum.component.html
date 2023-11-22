@@ -1,0 +1,54 @@
+<div class="container-fluid">
+  <div class="box">
+    <div class="box-content backwhite">
+      <form [formGroup]="referendumFormGroup" (ngSubmit)="onSubmit()">
+
+        <div class="my-3" >
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Title</mat-label>
+            <input matInput type="text" formControlName="title" />
+          </mat-form-field>
+          <div *ngIf="referendumFormGroup.get('title')?.touched">
+    <span *ngIf="referendumFormGroup.get('title')?.hasError('required')">
+      Please enter a title for the referendum
+    </span>
+          </div>
+        </div>
+
+        <div class="my-3" style="width: 50%">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description"></textarea>
+          </mat-form-field>
+          <div *ngIf="referendumFormGroup.get('description')?.touched && referendumFormGroup.get('description')?.hasError('required')">
+            <span>Please enter a description for the sociological survey</span>
+          </div>
+        </div>
+
+
+        <div class="card-container" formArrayName="referendumQuestion">
+          <div class="card" *ngFor="let question of getReferendumQuestionControls(); let i = index">
+            <div class="card-header" [formGroupName]="i">
+              <mat-form-field appearance="fill">
+                <mat-label>Option For</mat-label>
+                <input matInput type="text" formControlName="optionFor" [disabled]="true"/>
+              </mat-form-field>
+              <br><br>
+              <mat-form-field appearance="fill">
+                <mat-label>Option Against</mat-label>
+                <input matInput type="text" formControlName="optionAgainst" [disabled]="true"/>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="my-3">
+          <button mat-raised-button color="primary" type="submit">Create</button>
+        </div>
+
+      </form>
+<!--      <pre>{{ referendumFormGroup.value | json }}</pre>-->
+    </div>
+  </div>
+</div>

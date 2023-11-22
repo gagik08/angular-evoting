@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
 import {PageResponse} from "../model/page.response.model";
-import {SociologicalSurvey} from "../model/sociological-survey.model";
-import {Question} from "../model/question.model";
+import {SociologicalSurvey} from "../model/sociological-survey-models/sociological-survey.model";
+import {Question} from "../model/sociological-survey-models/question.model";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,31 @@ export class SociologicalSurveyService {
     return this.http.delete(`${environment.backendHost}/sociological-surveys/` + sociologicalSurveyId);
   }
 
-  public addQuestion(question: Question){
-    this.http.post(`${environment.backendHost}/sociological-surveys/add-question`, question)
+  public addSociologicalSurvey(sociologicalSurvey: any): Observable<any> {
+    return this.http.post(`${environment.backendHost}/sociological-surveys`, sociologicalSurvey);
   }
+
+  public getSociologicalSurveyQuestions(sociologicalSurveyId: number): Observable<any>{
+    return this.http.get<Question[]>(`${environment.backendHost}/sociological-surveys/${sociologicalSurveyId}/questions`);
+  }
+
+  public addQuestionToSociologicalSurvey(question:Question, sociologicalSurveyId: number){
+    return this.http.put(`${environment.backendHost}/sociological-surveys/${sociologicalSurveyId}/questions`, question);
+  }
+
+
+  public subscribeVoterOnSociologicalSurvey(sociologicalSurveyId: number, voterId: number | undefined): any {
+    const data = { sociologicalSurveyId, voterId };
+
+    return this.http.post(`${environment.backendHost}/sociological-surveys/${sociologicalSurveyId}/subscribe-on/voter/${voterId}`, data);
+  }
+
+  public getSociologicalSurvey(sociologicalSurveyId:number):Observable<any>{
+    return this.http.get<SociologicalSurvey>(`${environment.backendHost}/sociological-surveys/${sociologicalSurveyId}`);
+  }
+
+  voteForSelectedOption(sociologicalSurveyId: number, optionKey: string): Observable<any> {
+    return this.http.put(`${environment.backendHost}/sociological-surveys/${sociologicalSurveyId}/questions/vote?optionKey=${optionKey}`, optionKey);
+  }
+
 }

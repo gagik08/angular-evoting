@@ -2,7 +2,6 @@ import { User } from './user.model';
 
 export interface Voter {
   voterId: number;
-  firstName: string;
-  lastName: string;
+  fullName: string;
   user: User;
 }

@@ -3,7 +3,7 @@
     <div class="box-content backwhite">
 
       <div *ngIf="searchFormGroup" class="mb-2 mt30 d-flex align-items-center">
-        <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchSociologicalSurveys()" class="w-50">
+        <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchSociologicalSurveys" class="w-50">
           <div class="input-group">
             <input type="search" formControlName="keyword" class="form-control rounded mx-2" placeholder="Search"
                    aria-label="Search">
@@ -16,7 +16,7 @@
             <button
               aria-label="Example icon button with a plus one icon"
               type="submit" class="btn btn-primary"
-              (click)="getModal(content)">
+              routerLink="/add-sociological-survey">
               Post New Item
             </button>
           </div>
@@ -30,29 +30,36 @@
         <!--    -->
         <mat-card class="example-card" *ngFor="let survey of listSociologicalSurveys.content">
           <mat-card-header>
-            <div mat-card-avatar class="example-header-image"></div>
+            <div mat-card-avatar class="example-header-image-soc-survey"></div>
             <mat-card-title>{{survey.title}}</mat-card-title>
             <mat-card-subtitle>{{survey.category.categoryTitle}}</mat-card-subtitle>
           </mat-card-header>
           <mat-card-actions class="button-container">
             <div class="left-buttons">
-              <button mat-stroked-button color="accent">Questions</button>
-              <button mat-stroked-button color="accent" class="ml20">Results</button>
+              <button mat-stroked-button color="accent"
+                      routerLink="/view-sociological-survey/{{survey.sociologicalSurveyId}}/questions">View Questions
+              </button>
             </div>
-            <div class="right-buttons">
-              <button mat-raised-button color="warn" (click)="handleDeleteSociologicalSurvey(survey)">Delete</button>
-              <button mat-raised-button color="primary" class="ml20">Subscribe</button>
+            <div class="right-buttons"  *ngIf="isVoter">
+              <button mat-raised-button color="primary" class="ml20" (click)="participate(survey.sociologicalSurveyId)">
+                <mat-icon>library_add_check</mat-icon>
+                Subscribe On
+              </button>
+            </div>
+
+            <div class="right-buttons"  *ngIf="isCommissionMember">
+              <button mat-raised-button color="accent" class="ml20" (click)="delete(survey.sociologicalSurveyId)"><mat-icon>delete</mat-icon>
+                Delete</button>
             </div>
           </mat-card-actions>
         </mat-card>
 
-
         <ul class="nav nav-pills ml20">
-          <li *ngFor="let item of [].constructor(listSociologicalSurveys.totalPage); let page = index">
-            <a [ngClass]="page==currentPage? 'btn-info': 'btn-outline-info' " (click)="goToPage(page)"
-               class="btn mb-1 ms-1 mt-1">{{page}}</a>
+          <li *ngFor="let item of [].constructor(listSociologicalSurveys.totalPages); let page = index">
+            <a [ngClass]="page==currentPage? 'btn-info': 'btn-outline-info' " (click)="goToPage(page)" class="btn mb-1 ms-1 mt-1">{{page}}</a>
           </li>
         </ul>
+
 
       </ng-container>
 
@@ -79,51 +86,4 @@
   </div>
 </div>
 
-
-<ng-template #content let-modal>
-  <div class="modal-header">
-    <h1 class="modal-title text-muted"><i class="fa-regular fa-circle-dot"></i>&nbsp; Post a socialogical survey</h1>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-  </div>
-
-  <div class="row">
-    <div class="col-md-8 offset-md-2">
-      <form class="d-flex flex-column" [formGroup]="sociologicalSurveyFormGroup" method="post">
-        <mat-form-field class="w100">
-          <mat-label>Enter Title</mat-label>
-          <input type="text" name="title" placeholder="Enter here" formControlName="title" matInput/>
-        </mat-form-field>
-
-        <mat-form-field class="w100">
-          <mat-label>Enter Description</mat-label>
-          <textarea type="textarea" name="title" placeholder="Enter here" rows="5" formControlName="description"
-                    matInput></textarea>
-        </mat-form-field>
-
-        <mat-form-field class="w100">
-          <mat-label>Category: Sociological Survey</mat-label>
-          <input type="text" placeholder="Category" matInput [disabled]="true" formControlName="category"
-                 [readonly]="true"/>
-        </mat-form-field>
-
-        <mat-form-field class="w100">
-          <mat-label>Number of questions (from 1 to 5)</mat-label>
-          <input type="number" formControlName="numberOfQuestions" placeholder="Enter here" matInput/>
-          <mat-error *ngIf="sociologicalSurveyFormGroup.get('numberOfQuestions')?.hasError('range')">
-            Please enter a number between 1 and 5.
-          </mat-error>
-        </mat-form-field>
-
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-sm btn-secondary" (click)="onCloseModal(modal)">Close</button>
-          <button type="button" class="btn btn-sm btn-primary" (click)="onSaveModal(modal)">Post</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <pre>{{ sociologicalSurveyFormGroup.value | json }}</pre>
-
-</ng-template>
 

@@ -45,7 +45,6 @@
 
               <div class="container text-center">
                 <button mat-raised-button color="primary" (click)="onLogin()" type="submit">Sign In</button>
-                <button style="margin-left: 20px;" mat-raised-button color="accent" type="button">Reset</button>
               </div>
             </form>
           </mat-card-content>
@@ -54,46 +53,3 @@
     </div>
   </div>
 </div>
-
-<!--<div class="bootstrap-wrapper">-->
-<!--  <div class="container">-->
-<!--    <div class="row mt20">-->
-<!--      <div class="col-md-6 offset-md-3">-->
-<!--        <div class="card">-->
-<!--          <h1 class="text-center">Sign In</h1>-->
-<!--          <div class="container text-center">-->
-<!--            <img src="assets/images/login.jpg" height="180">-->
-<!--          </div>-->
-<!--          <br><br>-->
-<!--          <form [formGroup]="loginFormGroup" method="post">-->
-<!--            <div class="card-body">-->
-<!--              <div class="form-group">-->
-<!--                <label class="text-muted">Username</label>-->
-<!--                <input type="username" class="form-control form-font rounded-0 mt-1 mb-3" formControlName="username"-->
-<!--                       [ngClass]="{'is-invalid': submitted && loginFormGroup.controls['username'].errors}">-->
-<!--                <div *ngIf="submitted && loginFormGroup.get('username')?.errors" class="invalid-feedback">-->
-<!--                  <div *ngIf="loginFormGroup.get('username')!.errors?.['required']">-->
-<!--                    Valid username is required-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="form-group">-->
-<!--                <label class="text-muted">Password</label>-->
-<!--                <input type="password" class="form-control form-font rounded-0 mt-1 mb-3" formControlName="password"-->
-<!--                       [ngClass]="{'is-invalid': submitted && loginFormGroup.controls['password'].errors}">-->
-<!--                <div *ngIf="submitted && loginFormGroup.get('password')?.errors" class="invalid-feedback">-->
-<!--                  <div *ngIf="loginFormGroup.get('password')!.errors?.['required']">-->
-<!--                    Valid password is required-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="card-footer">-->
-<!--              <button type="button" (click)="onLogin()" class="btn btn-sm btn-primary">Login</button>-->
-<!--            </div>-->
-<!--          </form>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->

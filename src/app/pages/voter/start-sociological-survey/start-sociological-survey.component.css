@@ -1,0 +1,50 @@
+/* Add these styles to your CSS file or style section */
+
+.box {
+  margin-top: 20px;
+}
+
+.survey-title {
+  font-size: 24px;
+  color: #333;
+}
+
+.survey-description {
+  font-size: 18px;
+  color: #555;
+}
+
+.survey-card {
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.question-content {
+  font-size: 16px;
+  color: #333;
+}
+
+.divider {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.radio-label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.vote-button {
+  padding: 10px;
+  background-color: #4285f4;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.vote-button:hover {
+  background-color: #3367d6;
+}

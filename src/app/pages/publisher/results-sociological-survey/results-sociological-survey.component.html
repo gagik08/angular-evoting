@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <div class="box">
+    <div class="box-content backwhite">
+      <h1 class="text-center">Questions</h1>
+      <div class="bootstrap-wrapper">
+        <div class="row">
+          <div class="col-md-12">
+
+            <div *ngFor="let qu of question; let i = index" class="mt20">
+              <mat-card>
+                <mat-card-content>
+                  <p>
+                    <strong>Question {{i + 1}}: </strong>
+                    <span [innerHTML]="qu.content"></span>
+                  </p>
+                  <div *ngFor="let entry of Object.entries(qu.options); let j = index ">
+                    <div class="option-container">
+                      <b [ngClass]="{'green-text': entry[1] === getMaxValue(qu.options),
+                         'red-text': entry[1] !== getMaxValue(qu.options)}">
+                        {{entry[1]}}&nbsp;|&nbsp; {{entry[0]}}
+                      </b>
+                      <span class="percentage">
+                          {{ calculatePercentage(entry[1], getTotalSum(qu.options)) }}%
+                      </span>
+                    </div>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+              <br><br>
+            </div>
+
+
+          </div>
+        </div>
+        <button mat-fab extended color="primary" routerLink="/sociological-surveys">
+          <mat-icon>arrow_back</mat-icon>
+          Back
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,89 @@
-<p>referendums works!</p>
+<div class="container-fluid">
+  <div class="box">
+    <div class="box-content backwhite">
+
+      <div *ngIf="searchFormGroup" class="mb-2 mt30 d-flex align-items-center">
+        <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchReferendums()" class="w-50">
+          <div class="input-group">
+            <input type="search" formControlName="keyword" class="form-control rounded mx-2" placeholder="Search"
+                   aria-label="Search">
+            <button type="submit" class="btn btn-outline-primary">Search</button>
+          </div>
+        </form>
+
+        <div class="box-header-button ml-auto">
+          <div class="btn-group btn-group-sm">
+            <button
+              aria-label="Example icon button with a plus one icon"
+              type="submit" class="btn btn-primary"
+              routerLink="/add-referendum">
+              Post New Item
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+      <ng-container *ngIf="pageReferendum$ | async as listReferendums; else failureOrLoading">
+
+
+        <!--    -->
+        <mat-card class="example-card" *ngFor="let referendum of listReferendums.content">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image-referendum"></div>
+            <mat-card-title>{{referendum.title}}</mat-card-title>
+            <mat-card-subtitle>{{referendum.category.categoryTitle}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions class="button-container">
+            <div class="left-buttons">
+              <button mat-stroked-button color="accent" routerLink="/view-referendum/{{referendum.referendumId}}/referendum-question">View Question</button>
+            </div>
+            <div class="right-buttons"  *ngIf="isVoter">
+              <button mat-raised-button color="primary" class="ml20" (click)="participate(referendum.referendumId)"><mat-icon>library_add_check</mat-icon>
+                Subscribe On</button>
+            </div>
+
+            <div *ngIf="isCommissionMember">
+              <button mat-raised-button color="primary" (click)="participate(referendum.referendumId)"><mat-icon>visibility</mat-icon>
+                Results</button>
+            </div>
+
+            <div class="right-buttons"  *ngIf="isCommissionMember">
+              <button mat-raised-button color="accent" class="ml20" (click)="delete(referendum.referendumId)"><mat-icon>delete</mat-icon>
+                Delete</button>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+
+
+        <ul class="nav nav-pills ml20">
+          <li *ngFor="let item of [].constructor(listReferendums.totalPages); let page = index">
+            <a [ngClass]="page==currentPage? 'btn-info': 'btn-outline-info' " (click)="goToPage(page)"
+               class="btn mb-1 ms-1 mt-1">{{page}}</a>
+          </li>
+        </ul>
+
+      </ng-container>
+
+
+      <ng-template #failureOrLoading>
+        <ng-container *ngIf="errorMessage; else loading">
+          <div class="text-danger">
+            {{errorMessage}}
+          </div>
+        </ng-container>
+        <ng-template #loading>
+          <div class="loading-overlay">
+            <div class="loader shadow-sm text-muted">
+      <span style="font-size: 24px; font-weight: bold;">
+        <i class="fa-solid fa-rotate fa-spin"></i>
+      </span>
+              &nbsp;
+              <span class="processing">Processing...</span>
+            </div>
+          </div>
+        </ng-template>
+      </ng-template>
+    </div>
+  </div>
+</div>

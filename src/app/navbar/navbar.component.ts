@@ -9,6 +9,7 @@ import {PublishersService} from "../services/publishers.service";
 import {Voter} from "../model/voter.model";
 import {VoterService} from "../services/voter.service";
 import {Router} from "@angular/router";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-navbar',
@@ -22,9 +23,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isAdmin = false;
   isPublisher = false;
   publisherId: number | undefined;
+  isVoter = false;
   publicName!: string | undefined;
-  firstName!: string | undefined;
-  lastname!: string | undefined;
+  fullName!: string | undefined;
   currentPublisher!: Publisher | undefined;
   currentVoter!: Voter | undefined;
   updatePublisherFormGroup!: FormGroup;
@@ -32,7 +33,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   submitted: boolean = false;
 
-  isVoter = false;
   voterId: number | undefined;
 
   constructor(private authService: AuthService,
@@ -60,8 +60,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
           this.currentPublisher = loggedUser?.publisher;
         }
         else if (this.isVoter) {
-          this.firstName = loggedUser?.voter?.firstName;
-          this.lastname = loggedUser?.voter?.lastName;
+          this.fullName = loggedUser?.voter?.fullName;
           this.currentVoter = loggedUser?.voter;
         }
       }
@@ -97,21 +96,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.updatePublisherFormGroup = this.formBuilder.group({
         publisherId: [this.currentPublisher?.publisherId, Validators.required],
         publicName: [this.currentPublisher?.publicName, Validators.required],
-        history: [this.currentPublisher?.history, Validators.required],
+        history: [this.currentPublisher?.founder, Validators.required],
       })
     }
     else if (this.isVoter) {
       this.updateVoterFormGroup = this.formBuilder.group({
         voterId: [this.currentVoter?.voterId, Validators.required],
-        firstName: [this.currentVoter?.firstName, Validators.required],
-        lastName: [this.currentVoter?.lastName, Validators.required],
+        fullName: [this.currentVoter?.fullName, Validators.required],
       })
     }
   }
 
   onCloseModal(modal: any) {
     modal.close();
-
   }
 
   onUpdatePublisher(modal: any) {
@@ -119,12 +116,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (this.updatePublisherFormGroup.invalid) return;
     this.publisherService.updatePublisher(this.updatePublisherFormGroup.value, this.updatePublisherFormGroup.value.publisherId).subscribe({
       next: (publisher) => {
-        alert("Success updating Profile");
+        console.log('Success');
+        Swal.fire('Success', 'Data is updated successfully', 'success');
         this.authService.refreshPublisher(publisher);
         this.submitted = false;
-        modal.close();
-      }, error: err => {
-        alert(err.message)
+        this.onCloseModal(modal);
+        }, error: err => {
+        console.error('Error:');
+        Swal.fire('Error', 'Something goes wrong, try again later', 'error');
       }
     });
   }
@@ -135,13 +134,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (this.updateVoterFormGroup.invalid) return;
     this.voterService.updateVoter(this.updateVoterFormGroup.value, this.updateVoterFormGroup.value.voterId).subscribe({
       next: (voter) => {
-        alert("Success updating Profile");
+        console.log('Success');
+        Swal.fire('Success', 'Personal data is updated successfully', 'success');
         this.authService.refreshVoter(voter);
         this.submitted = false;
-        modal.close();
+        this.onCloseModal(modal);
       }, error: err => {
-        alert(err.message)
-        console.log(err);
+        console.error('Error:');
+        Swal.fire('Error', 'Something goes wrong, try again later', 'error');
       }
     });
   }

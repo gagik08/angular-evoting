@@ -1,6 +1,6 @@
 export interface PageResponse<DTO>{
   content: DTO[],
   number: number,
-  totalPage:number,
+  totalPages:number,
   pageSize: number
 }

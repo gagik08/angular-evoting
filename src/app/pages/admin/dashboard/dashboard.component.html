@@ -1,1 +1,58 @@
-<p>dashboard works!</p>
+<div class="container-fluid">
+  <div class="box">
+    <div class="box-content backwhite">
+      <div class="col-md-8">
+        <div class="container-fluid">
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <h3>All Voters</h3>
+              <div *ngIf="pageVoters$ | async as voters; else loadingOrError">
+                <div class="row">
+                  <div *ngFor="let voter of voters.content" class="col-md-4 mb-3">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">{{ voter.fullName }}</h5>
+                        <button class="btn btn-success" (click)="seeAllSubscriptions(voter.voterId)">See All Subscriptions</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ng-template #loadingOrError>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="box">
+    <div class="box-content backwhite">
+      <div class="col-md-8">
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <h3>All Publishers</h3>
+            <div *ngIf="pagePublishers$ | async as publishers; else loadingOrError">
+              <div class="row">
+                <div *ngFor="let publisher of publishers.content" class="col-md-4 mb-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ publisher.publicName }}</h5>
+                      <button class="btn btn-primary" (click)="seeAllPublications(publisher.publisherId)">See All Publications</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <ng-template #loadingOrError>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

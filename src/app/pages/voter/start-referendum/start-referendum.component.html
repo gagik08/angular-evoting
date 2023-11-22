@@ -1,0 +1,49 @@
+<!-- start-referendum.component.html -->
+
+<div class="container-fluid">
+  <div class="box">
+    <div class="box-content backwhite">
+      <div class="col-md-8">
+        <div *ngIf="referendum">
+          <h1><b>Take part in a referendum {{ referendum?.title }}</b></h1>
+          <h3><b>Description: {{ referendum.description }}</b></h3>
+
+          <ng-container *ngIf="referendum.referendumQuestion">
+            <mat-card>
+              <mat-card-content>
+
+                <mat-divider></mat-divider>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <!-- For option -->
+                    <mat-radio-group [(ngModel)]="selectedOption">
+                      <mat-radio-button value="Yes">Yes</mat-radio-button>
+                    </mat-radio-group>
+                    <br><br>
+                    <!-- Against option -->
+                    <mat-radio-group [(ngModel)]="selectedOption">
+                      <mat-radio-button value="No">No</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-md-6">
+                    <button mat-raised-button color="primary" (click)="voteForSelectedOption()">
+                      Vote
+                    </button>
+                  </div>
+                </div>
+
+              </mat-card-content>
+            </mat-card>
+          </ng-container>
+        </div>
+
+        <div class="col-md-2"></div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+.example-header-image-referendum {
+  background-image: url('src/assets/images/referendum.png');
+  /*background-size: cover;*/
+  background-size: 100%;
+}
+
+.example-card {
+  width: 1000px; /* Adjust the width of each card as needed */
+  margin: 10px; /* Add margin between cards */
+}
